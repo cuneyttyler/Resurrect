@@ -30,7 +30,7 @@ objectReference dummyContainerReference
 objectReference dummyTargetReference
 actor targetReference
 actor playerReference
-int zyxResurrectTimeout = 87
+int zyxResurrectTimeout = 29
 ;-- Functions ---------------------------------------
 
 event OnUpdateGameTime()
@@ -47,9 +47,6 @@ endEvent
 function onAnimationEvent(objectReference akSource, String asEventName)
 
 	if GameDaysPassed.GetValue() - zyxResurrectTimer.GetValue() >= zyxResurrectTimeout && akSource == targetReference as objectReference && asEventName == "GetupEnd"
-		Debug.Trace("zyxResurrect: OnAnimationEvent")
-		return 
-
 		self.UnRegisterForAnimationEvent(targetReference as objectReference, "GetupEnd")
 		if targetReference.hasKeyword(ActorTypeNPC)
 			self.resurrectNPC()
@@ -67,8 +64,7 @@ function onAnimationEvent(objectReference akSource, String asEventName)
 		Game.GetPlayer().RemoveSpell(zyxResurrectActiveEffectSpell)
 		zyxResurrectTimer.SetValue(GameDaysPassed.GetValue())
 	else
-		Debug.Trace("zyx:Resurrect: Fail")
-		; zyxResurrectSpellFailVisual.Cast(playerReference as objectReference, targetReference as objectReference)
+		zyxResurrectSpellFailVisual.Cast(playerReference as objectReference, targetReference as objectReference)
 	endIf
 endFunction
 
